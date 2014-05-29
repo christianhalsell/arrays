@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Christian Halsell - Arrays</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</head>
+
+<body>
+<h2>Decending Array</h2>
+<div id="arrayDescend"></div>
+
+<h2>Reversed Array</h2>
+<div id="arrayReverse"></div>
+
+<script type="text/javascript">
+//GENERATE AN ARRAY OF 100 RANDOM INTEGERS BETWEEN 1 AND 1000, SORT THEM IN DESCENDING ORDER, THEN REVERSE THE ARRAY.
+
+var numberDescend  = [];
+var duplicateCount;
+
+var getNumbers = function(total) {
+	
+	// Reset the duplicate count
+	duplicateCount = 0;
+	
+	// Create random numbers between 1 and 1000 and add them to the array
+	for (var i = 0; i < total; i++) {
+		var number = Math.floor(Math.random() * 1000 + 1);
+		numberDescend.push(number);
+	}
+	
+	// Rearrange the numbers to be in desending order
+	numberDescend.sort(function(a,b) {
+		return a-b;
+	}).reverse();
+	
+	// Check for duplicates and remove them
+	for (var i = 1; i < numberDescend.length; i++) {
+		if (numberDescend[i] == numberDescend[i - 1]) {
+			duplicateCount += 1;
+			numberDescend.splice(i, 1);
+		}
+	}	
+}
+
+// Fire the function for the first time
+getNumbers(100); // 100 total numbers. Changing this to 1000 will give you all numbers 1-1000
+
+// If there are duplicates, get new numbers
+do {
+	getNumbers(duplicateCount);
+} while(duplicateCount > 0);
+
+// Display the descending array in the DOM
+$('#arrayDescend').html("[" + numberDescend.join(", ") + "]");
+
+// Reverse a copy (slice) of the array. It will now be in ascending order
+var numberReverse = numberDescend.slice().reverse();
+
+// Display the reversed array in the DOM
+$('#arrayReverse').html("[" + numberReverse.join(", ") + "]");
+
+</script>
+</body>
+</html>
